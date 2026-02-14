@@ -9,6 +9,7 @@
     <?php 
 
     echo ("i dont like the color red");
+    echo ("i like the color blue");
     
     ?>
 </body>
