@@ -10,7 +10,7 @@ include "database.php";
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Document</title>
 </head>
-<body class="bg-[#151f2e] ml-10 mr-lg mt-lg">
+<body class="bg-[#030712] ">
     <!-- <form action="index.php" method="post"> -->
         <!-- <input type="text" name="username" placeholder="Enter your username">  -->
         <!-- <br>
@@ -21,21 +21,105 @@ include "database.php";
     </form> -->
 
 
-    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?> method = "post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method = "post">
 
-    <div class="bg-[#151f2e] w-1/2 mx-auto mt-100 justify-center items-center p-5 rounded-lg flex flex-col items-center gap-5 outline outline-1 outline-white">
-        <input type="text" name = "username" placeholder = "Enter your username" class= " bg-gray-300 px-4 py-2 rounded-lg mt-5 pl-xl">
-        <input type="password" name = "password" placeholder = "Enter your password" class= " bg-gray-300 px-4 py-2 rounded-lg mt-5 pl-xl">
-        <input type="submit" value="Submit" name="Submit" class="bg-gray-300 px-4 py-2 rounded-lg mt-5">
 
+    <div class = "w-1/2 h-screen mx-auto flex justify-center items-center flex-col gap-5">
+
+
+
+        <div class="bg-[#1c2029]  mx-auto flex justify-center   items-center p-10  rounded-lg   gap-5 outline outline-1 outline-gray-200">
+            <input type="text"     name = "username" placeholder = "Enter your username" class= " bg-gray-300 px-4 py-2 rounded-lg mt-5 ">
+            <input type="password" name = "password" placeholder = "Enter your password" class= " bg-gray-300 px-4 py-2 rounded-lg mt-5 ">
+            <input type="submit"   name="Submit"value="Submit"                           class="bg-gray-300 px-4 py-2 rounded-lg mt-5">
+
+
+        </div>
+
+
+    <div class="text-white">
+    <?php
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+        {
+            $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+            $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if(empty($username))
+                {
+                    echo "Please enter your username!";
+                }
+            else if(empty($password))
+                {
+                    echo "Please enter your password!";
+                }
+            else
+                {
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+                    $sql = "INSERT INTO users(username, password) VALUES ('$username', '$hash')";
+
+                    mysqli_query($conn, $sql);
+
+                    echo "Registration successful!";
+                }
+        }
+
+    ?>
+    </div>
 
     </div>
+
+    
 </form>
+
+
+
 </body>
 </html>
 
-    <?php
-    // if (isset($_POST["Submit"]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- // if (isset($_POST["Submit"]))
     // {
 
     //     if(!empty($_POST['username']) && !empty($_POST['password']))
@@ -90,5 +174,4 @@ include "database.php";
 //         echo "Registration Date: {$row['reg_date']} <br>";
 //     }
 
-// mysqli_close($conn);
-    ?>
+// mysqli_close($conn); -->
